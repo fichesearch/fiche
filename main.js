@@ -141,8 +141,14 @@ function runGoodSearch(isOldInternet = false) {
   const isSportsReferenceSearch = referenceSiteTriggers.some(trigger => input.includes(trigger));
   const isIntentionalSocialSearch = intentTriggers.some(trigger => input.includes(trigger));
   const isShoppingSearch = /\b(buy|cheap|price|under \$?\d+|on sale|deals?|discount|coupon|affordable)\b/i.test(input);
-  const isRawAddressSearch = /\b(\d{1,5} [a-z]+\b.*\bto\b.*|from .+ to .+)/i.test(rawInput);
-  const isNavigationSearch = navigationIntentTriggers.some(trigger => input.includes(trigger));
+const realEstateKeywords = /\b(rent|rental|buy|for sale|apartment|condo|zillow|redfin|realtor|mls|lease|homes?)\b/i;
+const isRawAddressSearch = (
+  /^\d{1,5}\s+[A-Za-z0-9\s]+(Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Lane|Ln|Drive|Dr|Court|Ct)\b/i.test(rawInput) &&
+  !realEstateKeywords.test(rawInput.toLowerCase())
+);
+  const isNavigationSearch =
+  navigationIntentTriggers.some(trigger => input.includes(trigger)) ||
+  isRawAddressSearch;
   const isStockSearch = /\b(stock|stocks|stock price|share price|ticker|quote|market cap|nasdaq|nyse)\b/i.test(input) ||
   /^[A-Z]{1,5}(\s+stock|\s+share|\s+price)?$/.test(rawInput.trim());
   const isCalculatorSearch =
@@ -267,6 +273,12 @@ for (const filter of filters) {
 if (isHoroscopeSearch) {
   finalQuery = `${rawInput} (site:astrology.com OR site:astrostyle.com OR site:horoscope.com OR site:chani.com OR site:cafeastrology.com OR site:sanctuaryworld.co)`;
   window.open(baseGoogle + encodeURIComponent(finalQuery), "_blank");
+  return;
+}
+
+if (isNavigationSearch) {
+  finalQuery = `https://www.google.com/maps/search/${encodeURIComponent(rawInput)}`;
+  window.open(finalQuery, "_blank");
   return;
 }
 
