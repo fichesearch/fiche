@@ -1,0 +1,158 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fefefe;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 300px;
+  font-size: 16px;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid transparent; 
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+  border-color: #ccc;
+  background-color: #ececec;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  gap: 10px;
+}
+
+.checkbox-wrapper label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tagline {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.toplink {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+}
+
+.toplink a {
+  color: #444;
+  text-decoration: none;
+}
+
+.toplink a:hover {
+  text-decoration: underline;
+
+}
+
+.how-content h2 {
+  margin-top: 0;
+}
+
+.top-bar {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.top-bar a {
+  pointer-events: auto;
+  color: #444;
+  text-decoration: none;
+}
+
+.top-bar a:hover {
+  text-decoration: underline;
+}
+
+.how-box {
+  display: none;
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  font-size: 16px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+}
+
+
+#howBox h2 {
+  margin-top: 0;
+}
+
+#advancedSearch {
+  display: none;
+}
