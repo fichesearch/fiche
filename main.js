@@ -363,6 +363,18 @@ document.addEventListener("DOMContentLoaded", () => {
       runGoodSearch();
     }
   });
+
+  // Enforce one toggle only
+  const checkboxes = document.querySelectorAll('#advancedSearch input[type="checkbox"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      if (this.checked) {
+        checkboxes.forEach((cb) => {
+          if (cb !== this) cb.checked = false;
+        });
+      }
+    });
+  });
 });
 
 function toggleHow() {
