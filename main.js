@@ -22,6 +22,7 @@ const allowListedTriggers = {
   "medium.com": ["medium", "site:medium.com"],
   "amazon.com": ["amazon", "site:amazon.com"],
   "yelp.com": ["yelp", "site:yelp.com"],
+  "reddit.com": ["reddit", "subreddit", "site:reddit.com"],
   "youtube.com": ["youtube", "site:youtube.com", "youtube video"]
 };
 
@@ -157,9 +158,14 @@ const isRawAddressSearch = (
   /\bwhat is\b(?! if| the| this| that| your| my| it| he| she| we| they| I| you| a| an| doing| supposed| going).+?\d/i.test(input) ||
   /\b(how much is|calculate|percent of|equals)\b.+?\d/i.test(input);
   const isCurrencySearch = /\b\d*\s?(usd|eur|gbp|jpy|cad|aud|inr|btc|eth)\b.*\b(to|in)\b.*\b(usd|eur|gbp|jpy|cad|aud|inr|btc|eth)\b/i.test(rawInput);
+  const isBusinessInfoSearch =
+  isRawAddressSearch && /\b(hours|open|closing|menu|phone|contact|store info|store hours|business hours)\b/i.test(input);
 const isUnitConversionSearch = /\b(how many|how much|convert)?\b.*\b(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b.*\b(to|in|from)?\b.*\b(cups?|from)?\b.*\b(cup?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b/i.test(input);
   const isTimeQuery = /\b(time (in|at)|current time|what time|sunrise|sunset|timezone|clock|date in|world clock|time now)\b/i.test(input);
   const isHoroscopeSearch = /\b(horoscope|zodiac|aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\b/i.test(input);
+  const isTechSupportSearch =
+  /\b(not working|won[’']?t work|broken|driver|install|installation|setup|configure|reset|issue|problem|support|troubleshoot|disconnect|can[’']?t connect|bluetooth|usb|pairing|update failed|stopped working|no longer working|fix|firmware)\b/i.test(input) &&
+  /\b(logitech|dell|hp|lenovo|asus|macbook|windows|pc|mouse|keyboard|printer|monitor|router|wifi|laptop|desktop|tablet|device|hardware|peripheral)\b/i.test(input);
   const isTranslationSearch = /\b(translate|how do you say|in (french|spanish|german|italian|japanese|korean|chinese|russian|arabic|portuguese|dutch|swedish|greek|latin))\b/i.test(input);
   const isDefinitionSearch = /\b(define|definition of|meaning of|what does .+ mean)\b/i.test(input);
   const isPackageTrackingSearch = /\b(track(ing)? (my )?(package|order)|where.*(package|order)|tracking number|usps|fedex|ups|dhl|order status)\b/i.test(input);
@@ -276,6 +282,12 @@ if (isHoroscopeSearch) {
   return;
 }
 
+if (isBusinessInfoSearch) {
+  finalQuery = `${rawInput} (site:yelp.com OR site:tripadvisor.com OR site:opentable.com OR site:google.com/maps OR site:foursquare.com)`;
+  window.open(baseGoogle + encodeURIComponent(finalQuery), "_blank");
+  return;
+}
+
 if (isNavigationSearch) {
   finalQuery = `https://www.google.com/maps/search/${encodeURIComponent(rawInput)}`;
   window.open(finalQuery, "_blank");
@@ -299,6 +311,12 @@ if (isLotterySearch) {
   window.open(baseGoogle + encodeURIComponent(finalQuery), "_blank");
   return;
 
+}
+
+if (isTechSupportSearch) {
+  finalQuery = `${rawInput} (site:logitech.com OR site:superuser.com OR site:stackoverflow.com OR site:linustechtips.com OR site:tomshardware.com OR site:answers.microsoft.com OR site:forums.macrumors.com OR site:techsupportforum.com OR site:tenforums.com OR site:support.lenovo.com OR site:dell.com/support)`;
+  window.open(baseGoogle + encodeURIComponent(finalQuery), "_blank");
+  return;
 }
 
 if (isBrainScienceSearch) {
