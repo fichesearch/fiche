@@ -83,6 +83,7 @@ const referenceSiteTriggers = [
   "site:fbref.com"
 ];
 
+
 const navigationIntentTriggers = [
   "directions to",
   "how to get to",
@@ -130,6 +131,15 @@ function runGoodSearch(isOldInternet = false) {
   if (!rawInput) return;
 
   const input = rawInput.toLowerCase();
+
+const isCalculatorConversion = /\d+\.?\d*\s?(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\s*(to|in)\s*(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)/i.test(input);
+
+if (isCalculatorConversion) {
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(rawInput)}`, "_blank");
+  return;
+}
+
+
   const baseGoogle = "https://www.google.com/search?q=";
   const waybackBase = "https://web.archive.org/web/*/";
   const selected = document.querySelector('.checkbox-wrapper input[type="checkbox"]:checked');
@@ -145,7 +155,8 @@ function runGoodSearch(isOldInternet = false) {
 const realEstateKeywords = /\b(rent|rental|buy|for sale|apartment|condo|zillow|redfin|realtor|mls|lease|homes?)\b/i;
 const isRawAddressSearch = (
   /^\d{1,5}\s+[A-Za-z0-9\s]+(Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Lane|Ln|Drive|Dr|Court|Ct)\b/i.test(rawInput) &&
-  !realEstateKeywords.test(rawInput.toLowerCase())
+  !realEstateKeywords.test(rawInput.toLowerCase()) &&
+  !/\b(letter|word|clue|crossword|puzzle)\b/i.test(rawInput)
 );
   const isNavigationSearch =
   navigationIntentTriggers.some(trigger => input.includes(trigger)) ||
@@ -160,7 +171,7 @@ const isRawAddressSearch = (
   const isCurrencySearch = /\b\d*\s?(usd|eur|gbp|jpy|cad|aud|inr|btc|eth)\b.*\b(to|in)\b.*\b(usd|eur|gbp|jpy|cad|aud|inr|btc|eth)\b/i.test(rawInput);
   const isBusinessInfoSearch =
   isRawAddressSearch && /\b(hours|open|closing|menu|phone|contact|store info|store hours|business hours)\b/i.test(input);
-const isUnitConversionSearch = /\b(how many|how much|convert)?\b.*\b(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b.*\b(to|in|from)?\b.*\b(cups?|from)?\b.*\b(cup?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b/i.test(input);
+  const isUnitConversionSearch = /\b(how (many|much)|convert|\d+\.?\d*)\b.*\b(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b.*\b(to|in)\b.*\b(cups?|ounces?|oz|grams?|g|liters?|l|ml|tbsp|tablespoons?|tsp|teaspoons?|pints?|quarts?|gallons?|kg|kilograms?|lbs?|pounds?|miles?|kilometers?|km|inches?|in|feet|ft|meters?|m)\b/i.test(input);
   const isTimeQuery = /\b(time (in|at)|current time|what time|sunrise|sunset|timezone|clock|date in|world clock|time now)\b/i.test(input);
   const isHoroscopeSearch = /\b(horoscope|zodiac|aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)\b/i.test(input);
   const isTechSupportSearch =
@@ -281,6 +292,28 @@ if (isHoroscopeSearch) {
   window.open(baseGoogle + encodeURIComponent(finalQuery), "_blank");
   return;
 }
+
+if (isUnitConversionSearch) {
+  // If abstract question, rewrite it
+  let finalConversionQuery = rawInput;
+  const hasNumber = /\d/.test(rawInput);
+
+  if (!hasNumber) {
+    if (/grams?.*ounce|ounce.*grams?/i.test(rawInput)) {
+      finalConversionQuery = "1 ounce to grams";
+    } else if (/grams?.*cup|cup.*grams?/i.test(rawInput)) {
+      finalConversionQuery = "1 cup to grams";
+    } else if (/ml.*oz|oz.*ml/i.test(rawInput)) {
+      finalConversionQuery = "1 oz to ml";
+    }
+  }
+
+  // Open raw or rewritten query in Google WITHOUT filters
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(finalConversionQuery)}`, "_blank");
+  return;
+}
+
+
 
 if (isBusinessInfoSearch) {
   finalQuery = `${rawInput} (site:yelp.com OR site:tripadvisor.com OR site:opentable.com OR site:google.com/maps OR site:foursquare.com)`;
