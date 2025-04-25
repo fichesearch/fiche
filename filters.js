@@ -391,28 +391,38 @@ trigger: [" reddit", " site:reddit.com"],
     ],
   ignoreIfCalculator: true
   },
-  {
-    trigger: ["vs", "versus", "x vs y", "better than"],
-    include: [
-    "site:blogspot.com",
-    "site:wordpress.com",
-    "site:indiewire.com",
-    "site:noamkroll.com",
-    "site:creativeindie.com",
-    "site:raindance.org",
+{
+  trigger: [
+    "writing software vs",
+    "screenwriting app",
+    "final draft vs",
+    "fade in vs",
+    "scrivener vs ulysses",
+    "self publishing vs traditional publishing",
+    "film editing software",
+    "davinci resolve vs premiere",
+    "creative cloud vs",
+    "studio binder vs"
+  ],
+  include: [
     "site:writingcooperative.com",
-     "site:medium.com",
-    "site:indietalk.com"
+    "site:raindance.org",
+    "site:noamkroll.com",
+    "site:indietalk.com",
+    "site:creativeindie.com",
+    "site:blog.reedsy.com",
+    "site:prolost.com",
+    "site:blog.finaldraft.com",
+    "site:filmmakermagazine.com"
   ],
   exclude: [
-    "-screenrant.com",
     "-buzzfeed.com",
-    "-cnet.com",
+    "-screenrant.com",
     "-pinterest.com",
-    "-tomsguide.com",
-    "-reddit.com"
-    ]
-  },
+    "-quora.com",
+    "-ai-summary.com"
+  ]
+},
   {
     trigger: ["why do i", "why can't i", "why am i always", "why does it feel"],
     include: [
@@ -801,49 +811,6 @@ trigger: [" reddit", " site:reddit.com"],
     "-verywellmind.com",
     "-healthline.com",
     "-youtube.com",
-    "-ai-summary.com"
-  ]
-},
-{
-  trigger: [
-    "best laptop",
-    "macbook air vs",
-    "macbook pro vs",
-    "intel vs amd",
-    "m1 vs m2",
-    "m2 vs m3",
-    "best mechanical keyboard",
-    "best wireless mouse",
-    "ultrawide vs dual monitor",
-    "4k vs 1080p",
-    "mac mini vs",
-    "best monitor for color grading",
-    "gpu for creative work",
-    "pc build for music production",
-    "pc vs mac"
-  ],
-  include: [
-    "site:theverge.com",
-    "site:tomshardware.com",
-    "site:anandtech.com",
-    "site:techspot.com",
-    "site:pcgamer.com",
-    "site:pcmag.com",
-    "site:arstechnica.com",
-    "site:blogspot.com",
-    "site:wordpress.com"
-  ],
-  exclude: [
-    "-buzzfeed.com",
-    "-screenrant.com",
-    "-pinterest.com",
-    "-quora.com",
-    "-cnet.com",
-    "-tomsguide.com",
-    "-wegotthiscovered.com",
-    "-reddit.com",
-    "-youtube.com",
-    "-windowscentral.com",
     "-ai-summary.com"
   ]
 },
@@ -1595,41 +1562,6 @@ trigger: [" reddit", " site:reddit.com"],
   ]
 },
 
-{
-  trigger: [
-    "lose weight", "lose belly fat", "burn fat", "best exercises for", 
-    "fat burning", "weight loss", "get in shape", "how to get abs", 
-    "tone body", "fitness tips", "workout for", "six pack", "cardio vs strength"
-  ],
-  include: [
-    "site:blogspot.com",
-    "site:wordpress.com",
-    "site:nerdfitness.com",
-    "site:examine.com",
-    "site:breakingmuscle.com",
-    "site:strongerbyscience.com",
-    "site:barbend.com",
-    "site:tonygentilcore.com",
-    "site:legionathletics.com"
-  ],
-  exclude: [
-    "-healthline.com",
-    "-verywellfit.com",
-    "-womenshealthmag.com",
-    "-menshealth.com",
-    "-popsugar.com",
-    "-eatthis.com",
-    "-buzzfeed.com",
-    "-screenrant.com",
-    "-pinterest.com",
-    "-quora.com",
-    "-wikihow.com",
-    "-medium.com",
-    "-cnet.com",
-    "-tomsguide.com",
-    "-ai-summary.com"
-  ]
-},
 
 {
   trigger: [
