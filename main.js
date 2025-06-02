@@ -233,7 +233,7 @@ const isRawAddressSearch = (
   if (selected) {
     const value = selectedMode.toLowerCase();
     if (value === "academic") {
-      finalQuery = `${rawInput} (site:.edu OR inurl:.edu OR site:.gov OR site:.org) (filetype:pdf OR filetype:doc OR filetype:ppt) university`;
+      finalQuery = `${rawInput} (site:.edu OR inurl:.edu OR site:.gov OR site:.org) (filetype:pdf OR filetype:doc OR filetype:ppt) university -ai-overview`;
     } else if (value === "book finder") {
       finalQuery = `${rawInput} (site:archive.org OR site:openlibrary.org OR site:gutenberg.org) filetype:pdf`;
     } else if (value === "forums") {
@@ -253,9 +253,9 @@ const isRawAddressSearch = (
     } else if (value === "public records") {
       finalQuery = `${rawInput} (site:govinfo.gov OR site:sec.gov OR site:archives.gov OR site:justice.gov OR site:foia.gov OR site:opengovus.com OR site:pacermonitor.com OR site:justia.com OR site:law.cornell.edu OR site:case.law OR site:propertyshark.com OR site:data.gov OR site:localwiki.org OR site:documentcloud.org)${isOldInternet ? " before:2008" : ""}`;
     } else if (value === "web 1.0") {
-      finalQuery = `${rawInput} before:2005 filetype:html`;
+      finalQuery = `${rawInput} before:2005 filetype:html -ai-overview`;
     } else if (value === "web 2.0") {
-      finalQuery = `${rawInput} after:2004 before:2014 filetype:html`;
+      finalQuery = `${rawInput} after:2004 before:2014 filetype:html -ai-overview`;
     } else {
       finalQuery = rawInput;
     }
@@ -263,7 +263,7 @@ const isRawAddressSearch = (
 
  // Old Internet mode
 else if (isOldInternet) {
-  finalQuery = `${rawInput} before:2008 filetype:html`;
+  finalQuery = `${rawInput} before:2008 filetype:html -ai-overview`;
 }
 
 
